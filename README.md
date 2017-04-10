@@ -1,3 +1,8 @@
+![](https://api.travis-ci.org/jacekkk/TabletClock.svg?branch=develop)
+
+Tablet Clock
+============
+
 Do you have old tablet? Or do you want to make your lovely device to show time and weather forecast when it on charging? This application for you!
 
 Nowadays wall clock are quite stupid, but price for them is a little bit less that price for tablet PC. And weather station is expensive. So, why do you need to buy stupid clock or expensive weather station when you can take this application and the cheapest table pc or old useless one and get smart clock:
