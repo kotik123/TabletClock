@@ -2,13 +2,14 @@ package lcf.clock;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 public class NavBarHider {
+	private static final String TAG = "NavBarHider";
 	private final Activity mActivity;
 	private final Handler mHandler = new Handler();
 	private static final int HIDE_TIMEOUT_MS = 1000;
@@ -23,6 +24,7 @@ public class NavBarHider {
 			if (!isRunning) {
 				return;
 			}
+			Log.d(TAG, "hiding: hasNavigationBar=" + hasNavigationBar);
 			if (hasNavigationBar && android.os.Build.VERSION.SDK_INT >= 11) {
 				mActivity
 						.getWindow()
@@ -35,16 +37,6 @@ public class NavBarHider {
 		}
 	};
 
-	public static int getNavigationBarHeight(Context context) {
-		Resources resources = context.getResources();
-		int resourceId = resources.getIdentifier("navigation_bar_height",
-				"dimen", "android");
-		if (resourceId > 0) {
-			return resources.getDimensionPixelSize(resourceId);
-		}
-		return 0;
-	}
-
 	@SuppressLint("NewApi")
 	public NavBarHider(Activity activity, final View rootView) {
 		mActivity = activity;
@@ -53,6 +45,7 @@ public class NavBarHider {
 			rootView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
 				@Override
 				public void onSystemUiVisibilityChange(int visibility) {
+					Log.d(TAG, "onSystemUiVisibilityChange");
 					if (!isRunning
 							|| (visibility & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) {
 						return;
@@ -68,6 +61,7 @@ public class NavBarHider {
 					@SuppressWarnings("deprecation")
 					@Override
 					public void onGlobalLayout() {
+						Log.d(TAG, "onGlobalLayout");
 						if (android.os.Build.VERSION.SDK_INT >= 16) {
 							content.getViewTreeObserver()
 									.removeOnGlobalLayoutListener(this);
@@ -75,11 +69,16 @@ public class NavBarHider {
 							content.getViewTreeObserver()
 									.removeGlobalOnLayoutListener(this);
 						}
-						hasNavigationBar = content.getHeight() < Style
-								.getDisplayMetrics().heightPixels;
+						hasNavigationBar = hasNavigationBar();
 						if (hasNavigationBar && isRunning) {
 							hide();
 						}
+					}
+
+					private boolean hasNavigationBar() {
+						DisplayMetrics displayMetrics = Style.getDisplayMetrics();
+						return content.getHeight() < displayMetrics.heightPixels
+								|| content.getWidth() < displayMetrics.widthPixels;
 					}
 				});
 	}
@@ -102,6 +101,7 @@ public class NavBarHider {
 
 	@SuppressLint("NewApi")
 	public void show() {
+		Log.d(TAG, "show");
 		if (android.os.Build.VERSION.SDK_INT >= 11) {
 			mActivity
 					.getWindow()
@@ -122,5 +122,4 @@ public class NavBarHider {
 		isRunning = true;
 		hide();
 	}
-
 }
