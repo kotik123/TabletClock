@@ -116,4 +116,12 @@
 	<string name="temperature_default_units">0</string>
 	<string name="pressure_default_units">0</string>
 	<string name="speed_default_units">0</string>
+
+    <!-- Set API key dialog -->
+	<string name="set_api_key">Set API key to enable weather related features</string>
+	<string name="set">Set</string>
+	<string name="verifying_api_key">Verifying API key</string>
+	<string name="api_key_ok">API key OK</string>
+	<string name="api_key_invalid">API key is invalid</string>
+	<string name="set_api_key_explanation">In order to use the weather features of this app, you need to obtain an API key to access services provided by OpenWeatherMap. They offer a free plan which is good enough for this app.\n\nYou can get the key at http://openweathermap.org/appid</string>
 </resources>

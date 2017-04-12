@@ -2,6 +2,7 @@ package lcf.clock.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import lcf.clock.R;
 
@@ -12,7 +13,7 @@ import lcf.clock.R;
  * @since 09.04.17
  */
 public class AppPreferences {
-	static final String CITY_NOT_SET = " ";
+	private static final String VALUE_NOT_SET = " ";
 
 	private final Context context;
 	private final SharedPreferences sharedPreferences;
@@ -22,27 +23,58 @@ public class AppPreferences {
 		this.sharedPreferences = sharedPreferences;
 	}
 
+	AppPreferences(Context context) {
+		this(context, PreferenceManager.getDefaultSharedPreferences(context));
+	}
+
 	public String getApiKey() {
 		return getStringPreference(R.string.key_api_key);
+	}
+
+	void setApiKey(String apiKey) {
+		sharedPreferences.edit()
+				.putString(context.getString(R.string.key_api_key), apiKey)
+				.commit();
+	}
+
+	public boolean isApiKeySet() {
+		return !"".equals(getApiKey().trim());
 	}
 
 	public int getCityId() {
 		return sharedPreferences.getInt(context.getString(R.string.key_city_id), 0);
 	}
 
-	public String getCityName() {
+	String getCityName() {
 		return getStringPreference(R.string.key_city);
+	}
+
+	void setCity(String city, int id) {
+		sharedPreferences.edit()
+				.putString(context.getString(R.string.key_city), city)
+				.putInt(context.getString(R.string.key_city_id), id)
+				.commit();
+	}
+
+	boolean isCitySet() {
+		return !"".equals(getCityName().trim());
 	}
 
 	private String getStringPreference(int key) {
 		return sharedPreferences.getString(context.getString(key), "");
 	}
 
-	public boolean checkFirstTime() {
+	public boolean checkCityFirstTime() {
 		if (getCityName().length() == 0) {
-			sharedPreferences.edit()
-					.putString(context.getString(R.string.key_city), CITY_NOT_SET)
-					.commit();
+			setCity(VALUE_NOT_SET, 0);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean checkApiKeyFirstTime() {
+		if (getApiKey().length() == 0) {
+			setApiKey(VALUE_NOT_SET);
 			return true;
 		}
 		return false;

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 import lcf.clock.TimeViewUpdater.DOT_MODE;
+import lcf.clock.prefs.ApiKeyDialog;
 import lcf.clock.prefs.AppPreferences;
 import lcf.clock.prefs.BrightnessDialog;
 import lcf.clock.prefs.CityDialog;
@@ -28,6 +29,7 @@ import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
 import android.provider.Settings;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +40,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ClockActivity extends Activity {
+    private static final String TAG = "ClockActivity";
+
     private BatteryScreenReciever mBatteryScreenChecker = null;
     private CameraAsLightSensor mLightSensor;
     private NavBarHider mNavBarHider;
@@ -471,7 +475,16 @@ public class ClockActivity extends Activity {
             mWeatherReciever.start(cityId, weatherUpdateIntervalMin, apiKey);
         }
 
-        if (appPreferences.checkFirstTime()) {
+        if (appPreferences.checkApiKeyFirstTime()) {
+            Log.i(TAG, "loadSettings: API key not set");
+            final Intent intent = new Intent(this, ApiKeyDialog.class);
+            startActivity(intent);
+            Toast.makeText(this, getString(R.string.set_api_key),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (appPreferences.isApiKeySet() && appPreferences.checkCityFirstTime()) {
             final Intent intent = new Intent(this, CityDialog.class);
             startActivity(intent);
             Toast.makeText(this, getString(R.string.firstTime),

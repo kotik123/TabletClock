@@ -1,15 +1,6 @@
 package lcf.clock.prefs;
 
-import java.util.List;
-
-import lcf.clock.R;
-import lcf.weather.CitiesCallback;
-import lcf.weather.City;
-import lcf.weather.WeatherMain;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +13,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import java.util.List;
+
+import lcf.clock.R;
+import lcf.weather.CitiesCallback;
+import lcf.weather.City;
+import lcf.weather.WeatherMain;
+
 public class CityDialog extends PrefsDialog implements OnEditorActionListener,
 		OnClickListener, OnItemClickListener {
 	private TextView mSearchStatus;
@@ -29,7 +27,6 @@ public class CityDialog extends PrefsDialog implements OnEditorActionListener,
 	private EditText mSearchLine;
 	private Button mSearchButton;
 	private CityListAdapter mCitiesListAdapter;
-	private SharedPreferences mSharedPreferences;
 	private AppPreferences mAppPreferences;
 
 	@Override
@@ -46,7 +43,7 @@ public class CityDialog extends PrefsDialog implements OnEditorActionListener,
 		mSearchLine.setOnEditorActionListener(this);
 		mSearchButton = ((Button) findViewById(R.id.buttonSearch));
 		mSearchButton.setOnClickListener(this);
-		((Button) findViewById(R.id.button3))
+		findViewById(R.id.closeButton)
 				.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -58,8 +55,7 @@ public class CityDialog extends PrefsDialog implements OnEditorActionListener,
 		mCitiesList.setAdapter(mCitiesListAdapter);
 		mCitiesList.setOnItemClickListener(this);
 
-		mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		mAppPreferences = new AppPreferences(this, mSharedPreferences);
+		mAppPreferences = new AppPreferences(this);
 	}
 
 	@Override
@@ -82,15 +78,14 @@ public class CityDialog extends PrefsDialog implements OnEditorActionListener,
 	@Override
 	protected void onResume() {
 		super.onResume();
-		String c = mAppPreferences.getCityName();
-		if (c.length() != 0 && !c.equals(AppPreferences.CITY_NOT_SET)) {
+		if (mAppPreferences.isCitySet()) {
+			String c = mAppPreferences.getCityName();
 			int p = c.lastIndexOf(",");
 			if (p > 0) {
 				mSearchLine.setText(c.substring(0, p));
 			}
 		} else {
 			search(true);
-
 		}
 	}
 
@@ -137,14 +132,9 @@ public class CityDialog extends PrefsDialog implements OnEditorActionListener,
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		City c = mCitiesListAdapter.getItem(position);
-		mSharedPreferences
-				.edit()
-				.putString(getString(R.string.key_city),
-						CityListAdapter.getCityReadable(c, this))
-				.putInt(getString(R.string.key_city_id), c.getId()).commit();
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		City city = mCitiesListAdapter.getItem(position);
+		mAppPreferences.setCity(CityListAdapter.getCityReadable(city, this), city.getId());
 		finish();
 	}
 }

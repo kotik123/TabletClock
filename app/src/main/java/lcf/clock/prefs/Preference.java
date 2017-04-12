@@ -155,6 +155,9 @@ public class Preference extends PreferenceActivity implements
 		findPreference(getString(R.string.key_city))
 				.setOnPreferenceClickListener(this);
 
+		findPreference(getString(R.string.key_api_key))
+				.setOnPreferenceClickListener(this);
+
 		findPreference(getString(R.string.key_show_system))
 				.setOnPreferenceClickListener(this);
 
@@ -245,7 +248,7 @@ public class Preference extends PreferenceActivity implements
 
 	private void updateCitySummaryAndEnablement(AppPreferences appPreferences) {
 		android.preference.Preference pref = findPreference(getString(R.string.key_city));
-		boolean enabled = !"".equals(appPreferences.getApiKey());
+		boolean enabled = appPreferences.isApiKeySet();
 		pref.setEnabled(enabled);
 		if (enabled) {
 			pref.setSummary(appPreferences.getCityName());
@@ -279,6 +282,9 @@ public class Preference extends PreferenceActivity implements
 			startActivity(intent);
 		} else if (preference.getKey().equals(getString(R.string.key_city))) {
 			final Intent intent = new Intent(this, CityDialog.class);
+			startActivity(intent);
+		} else if (preference.getKey().equals(getString(R.string.key_api_key))) {
+			final Intent intent = new Intent(this, ApiKeyDialog.class);
 			startActivity(intent);
 		} else if (preference.getKey().equals(
 				getString(R.string.key_show_system))) {

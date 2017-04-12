@@ -1,16 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/dcityroot"
+    android:id="@+id/root"
     android:gravity="center"
     android:orientation="vertical" >
 
-    <TextView
-        android:text="@string/cityDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+	<TextView
+		android:text="@string/set_api_key_explanation"
+		android:autoLink="web"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="8dp"/>
 
-   <LinearLayout
+	<LinearLayout
         android:orientation="horizontal"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
@@ -19,28 +21,26 @@
 
         <EditText
             android:inputType="text"
-            android:id="@+id/citysearch"
+            android:id="@+id/apiKeyEditText"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="fill_parent" />
+            android:layout_height="fill_parent"
+			android:hint="@string/preference_api_key"/>
+
         <Button
-	        android:id="@+id/buttonSearch"
+	        android:id="@+id/setApiKeyButton"
 	        android:layout_width="wrap_content"
 	        android:layout_height="fill_parent"
-	        android:text="@string/search" />
+	        android:text="@string/set" />
     </LinearLayout>
-    
-   <ListView 
-		android:id="@+id/citieslist"
-		android:layout_width="fill_parent"
-		android:layout_weight="1"
-		android:layout_height="0dp"/>
-   <TextView
-        android:id="@+id/searchStatus"
+
+	<TextView
+        android:id="@+id/setStatus"
         android:layout_width="wrap_content"
         android:layout_weight="1"
 		android:layout_height="0dp"/>
-    <Button
+
+	<Button
         android:id="@+id/closeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

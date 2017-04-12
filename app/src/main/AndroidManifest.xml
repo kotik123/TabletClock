@@ -26,7 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="lcf.clock.prefs.BrightnessDialog" 
+        <activity android:name="lcf.clock.prefs.ApiKeyDialog"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
+        <activity android:name="lcf.clock.prefs.BrightnessDialog"
 		    android:theme="@android:style/Theme.Dialog">
             </activity>
         <activity android:name="lcf.clock.prefs.ColorDialog" 
