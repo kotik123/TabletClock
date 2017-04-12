@@ -16,8 +16,8 @@
     <string name="day">Day</string>
 	<string name="no">no</string>
 	<string name="off">off</string>
-	<string name="extra1" formatted="false" >Today is %s, sunset: %s, sunrise: %s</string>
-	<string name="extra2" formatted="false" >Today sunset: %s, sunrise: %s</string>
+	<string name="extra1" formatted="false" >Today is %s, sunrise: %s, sunset: %s</string>
+	<string name="extra2" formatted="false" >Today sunrise: %s, sunset: %s</string>
 	<string name="Celsius">C</string>
 	<string name="Fahrenheit">F</string>
 	<string name="percent">%</string>
