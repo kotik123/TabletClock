@@ -1,4 +1,4 @@
-![](https://api.travis-ci.org/jacekkk/TabletClock.svg?branch=develop)
+![](https://api.travis-ci.org/DIRSoftware/TabletClock.svg?branch=develop)
 
 Tablet Clock
 ============
