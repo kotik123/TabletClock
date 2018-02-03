@@ -1,15 +1,11 @@
 apply plugin: 'com.android.application'
-
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
-
+    compileSdkVersion 24
     defaultConfig {
         applicationId "lcf.clock"
         minSdkVersion 7
-        targetSdkVersion 25
+        targetSdkVersion 24
     }
-
     buildTypes {
         release {
             lintOptions {
@@ -19,8 +15,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
-
     lintOptions {
         abortOnError false
     }
+}
+
+dependencies {
 }
