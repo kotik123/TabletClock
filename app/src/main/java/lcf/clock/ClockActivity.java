@@ -66,6 +66,9 @@ public class ClockActivity extends Activity {
     private boolean mUpdateWeatherCalled = false;
     private boolean enoughSpaceForWeekForecast = false;
 
+    private long lastTimeUpdate = System.currentTimeMillis();
+    private int weatherUpdateIntervalFromPrefs = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -286,6 +289,28 @@ public class ClockActivity extends Activity {
                     .show();
             mUpdateWeatherCalled = false;
         }
+
+        long updateIntervalInMilliseconds = weatherUpdateIntervalFromPrefs * 1000 * 60;
+        if (System.currentTimeMillis() > lastTimeUpdate + updateIntervalInMilliseconds) {
+//            Log.i(TAG, "Rotate trigger worked!");
+            lastTimeUpdate = System.currentTimeMillis();
+            triggerOrientationChange();
+        }
+    }
+
+    private void triggerOrientationChange() {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            try { Thread.sleep(1000); } catch (Exception e) {}
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+        else
+        {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            try { Thread.sleep(1000); } catch (Exception e) {}
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void updateData() {
@@ -467,6 +492,7 @@ public class ClockActivity extends Activity {
 
         int weatherUpdateIntervalMin = Integer.parseInt(prefs.getString(
                 getString(R.string.key_update), "0"));
+        weatherUpdateIntervalFromPrefs = weatherUpdateIntervalMin;      // saving data in a local variable, for use outside of the method
         int cityId = appPreferences.getCityId();
 
         String apiKey = appPreferences.getApiKey();
