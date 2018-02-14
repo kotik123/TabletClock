@@ -155,8 +155,8 @@ public class ClockActivity extends Activity {
         mTemperatureView.setMinWidth(tmp.width());
         Style.applyTextsView(mDate1View, secondLineHeight * 0.40f - reserved); // sum should be 1.0 or less with next
         mDate1View.setPadding(0, reserved, 0, reserved);
-        Style.applyTextsView(mDate2View, secondLineHeight * 0.24f - reserved);// sum should be 1.0 or less with prev
-        mDate2View.setPadding(0, 0, 0, reserved);
+        Style.applyTextsView(mDate2View, secondLineHeight * 0.40f - reserved);// sum should be 1.0 or less with prev
+        mDate2View.setPadding(0, -reserved, 0, reserved);
         float alarmSize = secondLineHeight * 0.24f - reserved;
         Style.applyTextsView(mAlarm1View, alarmSize);
         mNowWeather.setPadding(0, reserved, 0, reserved);
