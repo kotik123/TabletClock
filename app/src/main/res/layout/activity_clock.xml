@@ -11,7 +11,7 @@
    		    android:id="@+id/dummyView1"
 		    android:layout_weight="1"
 		    android:layout_width="fill_parent"
-		    android:layout_height="0dp"/> 
+		    android:layout_height="0dp"/>
 		       
 	    <lcf.clock.BigTextView
 		    android:id="@+id/timeView"
@@ -37,7 +37,7 @@
 			        android:id="@+id/dummyView3" 
 			        android:visibility="gone"
 				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"/> 
+				    android:layout_height="wrap_content"/>
 			    <lcf.clock.BigTextView
 			        android:layout_gravity="bottom"
 			        android:id="@+id/temperature"
@@ -48,7 +48,7 @@
 				<lcf.clock.WeatherView class="lcf.weather.view.WeatherView"
 				    android:layout_gravity="bottom"
 		            android:id="@+id/weatherNow"
-			        android:layout_width="wrap_content" 
+			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"/>
 			    
 				<LinearLayout 
@@ -88,27 +88,74 @@
 				<lcf.clock.WeatherView class="lcf.weather.view.WeatherView"
 		            android:id="@+id/weatherSlot1"
 		            android:layout_weight="1"
-			        android:layout_width="wrap_content" 
+			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"/>
 				
 				<lcf.clock.WeatherView class="lcf.weather.view.WeatherView"
 		            android:id="@+id/weatherSlot2"
 		            android:layout_weight="1"
-			        android:layout_width="wrap_content" 
+			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"/>
 				
 				<lcf.clock.WeatherView class="lcf.weather.view.WeatherView"
 		            android:id="@+id/weatherSlot3"
 		            android:layout_weight="1"
-			        android:layout_width="wrap_content" 
+			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"/>
 				
 				<lcf.clock.WeatherView class="lcf.weather.view.WeatherView"
 		            android:id="@+id/weatherSlot4"
 		            android:layout_weight="1"
-			        android:layout_width="wrap_content" 
+			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"/>
-		    
+
+				<LinearLayout
+					android:id="@+id/layBatt"
+					android:orientation="vertical"
+					android:layout_width="wrap_content"
+					android:gravity="right"
+					android:layout_height="fill_parent">
+
+					<TextView
+						android:id="@+id/batLine80"
+						android:layout_width="wrap_content"
+						android:layout_weight="1"
+						android:layout_height="wrap_content"
+						android:layout_marginRight="0dp"
+						android:text="   "
+						android:background="#00FF00"
+						/>
+					<TextView
+						android:id="@+id/batLine60"
+						android:layout_width="wrap_content"
+						android:layout_weight="1"
+						android:layout_height="wrap_content"
+						android:layout_marginRight="0dp"
+						android:text="   "
+						android:background="#0000FF"
+						/>
+					<TextView
+						android:id="@+id/batLine40"
+						android:layout_width="wrap_content"
+						android:layout_weight="1"
+						android:layout_height="wrap_content"
+						android:layout_marginRight="0dp"
+						android:text="   "
+						android:background="#FF0000"
+						/>
+					<TextView
+						android:id="@+id/batLine20"
+						android:layout_width="wrap_content"
+						android:layout_weight="1"
+						android:layout_height="wrap_content"
+						android:layout_marginRight="0dp"
+						android:text="   "
+						android:background="#FFFF00"
+						/>
+
+				</LinearLayout>
+
+
 		    </LinearLayout>
 	    </LinearLayout>
 	    	
@@ -226,6 +273,6 @@
 	        android:id="@+id/dummyView2" 
 		    android:layout_weight="1"
 		    android:layout_width="fill_parent"
-		    android:layout_height="0dp"/> 
+		    android:layout_height="0dp"/>
 	    
 </LinearLayout>
