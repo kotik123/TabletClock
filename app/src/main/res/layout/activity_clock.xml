@@ -79,7 +79,7 @@
 		    
 		    </LinearLayout>
 	    
-		    <LinearLayout 
+		    <LinearLayout
 		        android:id="@+id/layoutForecast"
 		        android:orientation="horizontal"
 		        android:layout_width="match_parent"
@@ -109,52 +109,14 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"/>
 
-				<LinearLayout
-					android:id="@+id/layBatt"
-					android:orientation="vertical"
-					android:layout_width="wrap_content"
-					android:gravity="right"
-					android:layout_height="fill_parent">
-
-					<TextView
-						android:id="@+id/batLine80"
-						android:layout_width="wrap_content"
-						android:layout_weight="1"
-						android:layout_height="wrap_content"
-						android:layout_marginRight="0dp"
-						android:text="   "
-						android:background="#00FF00"
-						/>
-					<TextView
-						android:id="@+id/batLine60"
-						android:layout_width="wrap_content"
-						android:layout_weight="1"
-						android:layout_height="wrap_content"
-						android:layout_marginRight="0dp"
-						android:text="   "
-						android:background="#0000FF"
-						/>
-					<TextView
-						android:id="@+id/batLine40"
-						android:layout_width="wrap_content"
-						android:layout_weight="1"
-						android:layout_height="wrap_content"
-						android:layout_marginRight="0dp"
-						android:text="   "
-						android:background="#FF0000"
-						/>
-					<TextView
-						android:id="@+id/batLine20"
-						android:layout_width="wrap_content"
-						android:layout_weight="1"
-						android:layout_height="wrap_content"
-						android:layout_marginRight="0dp"
-						android:text="   "
-						android:background="#FFFF00"
-						/>
-
-				</LinearLayout>
-
+				<ProgressBar
+					android:id="@+id/progressBar"
+					android:layout_width="15dp"
+					android:layout_height="fill_parent"
+					android:progressDrawable="@drawable/vertical_progressbar_green"
+					style="?android:attr/progressBarStyleHorizontal"
+					android:indeterminate="false"
+					android:max="100"/>
 
 		    </LinearLayout>
 	    </LinearLayout>

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.Handler;
+import android.os.Message;
 import android.view.WindowManager;
 
 public class BatteryScreenReciever {
@@ -14,8 +16,12 @@ public class BatteryScreenReciever {
 	private final float mBatterySaveLevel;
 	private final boolean mAutoClose;
 
+	final int STATUS_BATTERY_LEVEL = 0;			// уровень батареи
+	final int STATUS_BATTERY_DISCHARGING = 1;	// батарея разряжается
+	final int STATUS_BATTERY_CHARGING = 2;		// батарея заряжается
+
 	public BatteryScreenReciever(Activity activity, int levelPercent,
-			boolean autoClose) {
+								 boolean autoClose, final Handler handler) {
 		mActivity = activity;
 		mAutoClose = autoClose;
 		mBatterySaveLevel = levelPercent / 100.0f;
@@ -34,6 +40,19 @@ public class BatteryScreenReciever {
 				public void onReceive(Context context, Intent intent) {
 					if (intent.getAction()
 							.equals(Intent.ACTION_BATTERY_CHANGED)) {
+						if (intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1) ==
+								BatteryManager.BATTERY_STATUS_CHARGING)	{
+							handler.sendEmptyMessage(STATUS_BATTERY_CHARGING);
+						}
+						if (intent.getIntExtra(BatteryManager.EXTRA_STATUS, 0) !=
+								BatteryManager.BATTERY_STATUS_CHARGING)	{
+							handler.sendEmptyMessage(STATUS_BATTERY_DISCHARGING);
+						}
+						int batLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+						Message msg;
+						msg = handler.obtainMessage(STATUS_BATTERY_LEVEL, batLevel, 0);
+						handler.sendMessage(msg);
+
 						if (intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0)
 								* mBatterySaveLevel > intent.getIntExtra(
 								BatteryManager.EXTRA_LEVEL, -1)

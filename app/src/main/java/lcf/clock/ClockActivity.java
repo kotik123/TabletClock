@@ -25,6 +25,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
 import android.provider.Settings;
@@ -36,6 +37,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,9 +67,16 @@ public class ClockActivity extends Activity {
     private Date mSunSet = null;
     private boolean mUpdateWeatherCalled = false;
     private boolean enoughSpaceForWeekForecast = false;
+    private ProgressBar progressBar;
 
     private long lastTimeUpdate = System.currentTimeMillis();
     private int weatherUpdateIntervalFromPrefs = 0;
+
+    final int STATUS_BATTERY_LEVEL = 0;
+    final int STATUS_BATTERY_DISCHARGING = 1;
+    final int STATUS_BATTERY_CHARGING = 2;
+    Handler handler;          // for callback messages from BatteryScreenReciever
+    boolean charging = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +118,7 @@ public class ClockActivity extends Activity {
         mLayoutWeekForecast = (LinearLayout) findViewById(R.id.layoutWeekForecast);
         mLayoutToday = (LinearLayout) findViewById(R.id.layoutToday);
         mExtraData = (TextView) findViewById(R.id.extraData);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         calcSizes();
 
@@ -126,6 +136,26 @@ public class ClockActivity extends Activity {
                 mWeatherReciever.softUpdate();
             }
         });
+
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                if (msg.what == STATUS_BATTERY_LEVEL) {
+                    progressBar.setProgress(msg.arg1);
+                }
+                if (msg.what == STATUS_BATTERY_CHARGING) {
+                    if (charging==false) {
+                        charging=true;
+                        progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.vertical_progressbar_charging_orange));
+                    }
+                }
+                if (msg.what == STATUS_BATTERY_DISCHARGING) {
+                    if (charging) {
+                        charging=false;
+                        progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.vertical_progressbar_green));
+                    }
+                }
+            };
+        };
 
         mNavBarHider = new NavBarHider(this, findViewById(R.id.rootView));
 
@@ -429,7 +459,7 @@ public class ClockActivity extends Activity {
                 .toString(), false);
         if (blevel >= 0 || autoclose) {
             mBatteryScreenChecker = new BatteryScreenReciever(this, blevel,
-                    autoclose);
+                    autoclose, handler);
         }
 
         String val = prefs.getString(getText(R.string.key_dot).toString(),
