@@ -103,6 +103,7 @@
 	<string name="cat3_weather_24h">24 часовой прогноз</string>
 	<string name="cat3_weather_24h_summary">Отображать подробный прогноз на следующие 24 часа</string>	
 	<string name="cat3_weather_week">Недельный прогноз</string>
-	<string name="cat3_weather_week_summary">Отображать прогноз погоды на следующую неделю</string>			
-	
+	<string name="cat3_weather_week_summary">Отображать прогноз погоды на следующую неделю</string>
+	<string name="cat3_battery_level">Уровень заряда батареи</string>
+	<string name="cat3_battery_level_summary">Показывать уровень заряда батареи</string>
 </resources>

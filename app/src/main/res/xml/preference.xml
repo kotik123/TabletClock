@@ -109,5 +109,10 @@
                 android:key="@string/key_weather_week"
                 android:summary="@string/cat3_weather_week_summary"
                 android:title="@string/cat3_weather_week" />
+         <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="@string/key_battery_level"
+                android:summary="@string/cat3_battery_level_summary"
+                android:title="@string/cat3_battery_level" />
     </PreferenceCategory>
 </PreferenceScreen>

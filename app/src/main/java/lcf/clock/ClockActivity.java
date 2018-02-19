@@ -479,6 +479,9 @@ public class ClockActivity extends Activity {
         mTemperatureView.setVisibility(now);
         mNowWeather.setVisibility(now);
 
+        int showBatteryLevel = prefsVisibility(prefs, R.string.key_battery_level);
+        progressBar.setVisibility(showBatteryLevel);
+
         int today = prefsVisibility(prefs, R.string.key_today);
         mDate1View.setVisibility(today);
         mDate2View.setVisibility(today);

@@ -108,7 +108,9 @@
 	<string name="cat3_weather_24h">24 hours forecast</string>
 	<string name="cat3_weather_24h_summary">Display detailed forecast for next 24 hours</string>	
 	<string name="cat3_weather_week">Week forecast</string>
-	<string name="cat3_weather_week_summary">Display week forecast</string>			
+	<string name="cat3_weather_week_summary">Display week forecast</string>
+	<string name="cat3_battery_level">true</string>
+	<string name="cat3_battery_level_summary">Show battery charge level</string>
 
 	<!-- Check WeatherUnits to view indexes for default units -->
 	<string name="temperature_default_units">0</string>
