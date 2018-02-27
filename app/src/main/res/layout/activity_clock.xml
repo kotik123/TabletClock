@@ -6,13 +6,25 @@
     android:gravity="top"
     android:id="@+id/rootView"
     tools:context=".ClockActivity" >
-    
+
+	<ProgressBar
+		android:layout_weight="1"
+		android:id="@+id/batteryProgressBar"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:minWidth="0dp"
+		android:maxWidth="0dp"
+		android:progressDrawable="@drawable/battery_progress_bar"
+		style="?android:attr/progressBarStyleHorizontal"
+		android:indeterminate="false"
+		android:max="100"/>
+
    		<View
    		    android:id="@+id/dummyView1"
 		    android:layout_weight="1"
 		    android:layout_width="fill_parent"
 		    android:layout_height="0dp"/>
-		       
+
 	    <lcf.clock.BigTextView
 		    android:id="@+id/timeView"
 		    android:gravity="center_vertical"
@@ -78,17 +90,6 @@
 				        android:layout_width="wrap_content"
 				        android:layout_height="wrap_content"
 				      />
-					<ProgressBar
-						android:layout_weight="1"
-						android:id="@+id/progressBarHorizontal"
-						android:layout_height="wrap_content"
-						android:layout_width="fill_parent"
-						android:minWidth="0dp"
-						android:maxWidth="0dp"
-						android:progressDrawable="@drawable/horizontal_progressbar_green"
-						style="?android:attr/progressBarStyleHorizontal"
-						android:indeterminate="false"
-						android:max="100"/>
 				 </LinearLayout>
 		    
 		    </LinearLayout>
@@ -122,18 +123,6 @@
 		            android:layout_weight="1"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"/>
-
-				<ProgressBar
-					android:id="@+id/progressBar"
-					android:layout_weight="0.3"
-					android:layout_height="fill_parent"
-					android:layout_width="wrap_content"
-					android:minWidth="0dp"
-					android:maxWidth="0dp"
-					android:progressDrawable="@drawable/vertical_progressbar_green"
-					style="?android:attr/progressBarStyleHorizontal"
-					android:indeterminate="false"
-					android:max="100"/>
 
 		    </LinearLayout>
 	    </LinearLayout>

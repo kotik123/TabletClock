@@ -22,12 +22,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -35,11 +38,13 @@ import android.provider.AlarmClock;
 import android.provider.Settings;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -71,8 +76,7 @@ public class ClockActivity extends Activity {
     private Date mSunSet = null;
     private boolean mUpdateWeatherCalled = false;
     private boolean enoughSpaceForWeekForecast = false;
-    private ProgressBar progressBar;
-    private ProgressBar progressBarHorizontal;
+    private ProgressBar batteryProgressBar;
 
     private long lastTimeUpdate = System.currentTimeMillis();
     private int weatherUpdateIntervalFromPrefs = 0;
@@ -84,7 +88,6 @@ public class ClockActivity extends Activity {
     boolean charging = false;
 
     int textColor;          // color of the all texts
-    boolean weather24PanelVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,9 +129,11 @@ public class ClockActivity extends Activity {
         mLayoutWeekForecast = (LinearLayout) findViewById(R.id.layoutWeekForecast);
         mLayoutToday = (LinearLayout) findViewById(R.id.layoutToday);
         mExtraData = (TextView) findViewById(R.id.extraData);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBarHorizontal = (ProgressBar) findViewById(R.id.progressBarHorizontal);
+        batteryProgressBar = (ProgressBar) findViewById(R.id.batteryProgressBar);
         calcSizes();
+
+//        сделаю ка я ширину горизонтального прогресс бара опцией
+
 
         // need to get width of mDate1View, but first it must be filled with data
         Date now = new Date();
@@ -138,9 +143,13 @@ public class ClockActivity extends Activity {
         mDate1View.setText(d);
         mDate1View.measure(0,0); // замер размеров
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mDate1View.getMeasuredWidth()/3, 5);
-        progressBarHorizontal.setLayoutParams(params);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        batteryProgressBar.setLayoutParams(params);
 
-        mWeatherReciever = new WeatherMain(getFilesDir(), new Runnable() {
+        textColor = getTextColorFromSettings();
+        initializeProgressBar();
+
+                mWeatherReciever = new WeatherMain(getFilesDir(), new Runnable() {
             @Override
             public void run() {
                 updateWeatherData();
@@ -158,31 +167,24 @@ public class ClockActivity extends Activity {
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 if (msg.what == STATUS_BATTERY_LEVEL) {
-                    progressBar.setProgress(msg.arg1);
-                    progressBarHorizontal.setProgress(msg.arg1);
+                    batteryProgressBar.setProgress(msg.arg1);
                 }
-                LayerDrawable progressBarDrawable = (LayerDrawable) progressBar.getProgressDrawable();
-                LayerDrawable progressBar2Drawable = (LayerDrawable) progressBarHorizontal.getProgressDrawable();
-                Drawable backgroundDrawable1 = progressBarDrawable.getDrawable(0);
-                Drawable progressDrawable1 = progressBarDrawable.getDrawable(1);
-                Drawable backgroundDrawable2 = progressBar2Drawable.getDrawable(0);
-                Drawable progressDrawable2 = progressBar2Drawable.getDrawable(1);
+                LayerDrawable pbLayerDrawable = (LayerDrawable) batteryProgressBar.getProgressDrawable();
+                Drawable background = pbLayerDrawable.getDrawable(0);
+                Drawable tint = pbLayerDrawable.getDrawable(1);
+
                 if (msg.what == STATUS_BATTERY_CHARGING) {
                     if (charging==false) {
                         charging=true;
-                        backgroundDrawable1.setColorFilter(darkenColor(textColor, 0.3f), PorterDuff.Mode.SRC_IN);
-                        progressDrawable1.setColorFilter(darkenColor(Color.YELLOW, 0.5f), PorterDuff.Mode.SRC_IN);
-                        backgroundDrawable2.setColorFilter(darkenColor(textColor, 0.3f), PorterDuff.Mode.SRC_IN);
-                        progressDrawable2.setColorFilter(darkenColor(Color.YELLOW, 0.5f), PorterDuff.Mode.SRC_IN);
+                        background.setColorFilter(darkenColor(textColor, 0.3f), PorterDuff.Mode.SRC_IN);
+                        tint.setColorFilter(darkenColor(Color.YELLOW, 0.5f), PorterDuff.Mode.SRC_IN);
                     }
                 }
                 if (msg.what == STATUS_BATTERY_DISCHARGING) {
                     if (charging) {
                         charging=false;
-                        backgroundDrawable1.setColorFilter(darkenColor(textColor, 0.3f), PorterDuff.Mode.SRC_IN);
-                        progressDrawable1.setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
-                        backgroundDrawable2.setColorFilter(darkenColor(textColor, 0.3f), PorterDuff.Mode.SRC_IN);
-                        progressDrawable2.setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
+                        background.setColorFilter(darkenColor(textColor, 0.3f), PorterDuff.Mode.SRC_IN);
+                        tint.setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
                     }
                 }
             };
@@ -209,6 +211,21 @@ public class ClockActivity extends Activity {
                 Math.min(r,255),
                 Math.min(g,255),
                 Math.min(b,255));
+    }
+
+    private void initializeProgressBar() {
+        LayerDrawable pbLayerDrawable = (LayerDrawable) batteryProgressBar.getProgressDrawable();
+        Drawable background = pbLayerDrawable.getDrawable(0);
+        Drawable tint = pbLayerDrawable.getDrawable(1);
+        background.setColorFilter(darkenColor(textColor, 0.3f), PorterDuff.Mode.SRC_IN);
+        tint.setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
+    }
+
+    private int getTextColorFromSettings() {
+        PreferenceManager.setDefaultValues(this, R.xml.preference, false);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //return prefs.getInt("key_color", -16711936);
+        return ColorDialog.getTextColorInt(prefs, this);
     }
 
     private void calcSizes() {
@@ -542,35 +559,10 @@ public class ClockActivity extends Activity {
             findViewById(R.id.dummyView3).setVisibility(View.GONE);
         }
 
-        if (prefs.getBoolean("battery_level", true) == true) {      // if show battery indicator option enabled
-            if (weather24 == View.VISIBLE) {
-                weather24PanelVisible = true;
-                progressBar.setVisibility(View.VISIBLE);             // if weather panel visible, show vertical PB, hide horizontal
-                progressBarHorizontal.setVisibility(View.GONE);
-            }
-            else {
-                weather24PanelVisible = false;
-                progressBar.setVisibility(View.GONE);                // if weather panel is hidden, show horizontal PB, hide vertical
-                progressBarHorizontal.setVisibility(View.VISIBLE);
-            }
-        }
-        else {
-            progressBar.setVisibility(View.GONE);
-            progressBarHorizontal.setVisibility(View.GONE);
-        }
-
-//        if (weather24 == View.VISIBLE) {                              // if the weather panel visible
-//            weather24PanelVisible = true;
-//            if (prefs.getBoolean("battery_level", true) == true) // and show battery level enabled
-//                progressBar.setVisibility(View.VISIBLE);
-//            else
-//                progressBar.setVisibility(View.GONE);
-//        }
-//        else
-//            progressBar.setVisibility(View.GONE);       // the weather panel is invisible, must to hide her battery progress bar
-
-
-
+        if (prefs.getBoolean("battery_level", true))    // if show battery indicator option enabled
+            batteryProgressBar.setVisibility(View.VISIBLE);
+        else
+            batteryProgressBar.setVisibility(View.GONE);
 
         int weatherWeek = prefsVisibility(prefs, R.string.key_weather_week);
         for (WeatherView w : mWeekForecast) {
@@ -592,7 +584,9 @@ public class ClockActivity extends Activity {
         findViewById(R.id.rootView).setBackgroundColor(
                 ColorDialog.getBackgroundColorInt(prefs, this));
 
+        // text color has changed, need to reinitialize battery progress bar
         textColor = ColorDialog.getTextColorInt(prefs, this);
+        initializeProgressBar();
 
         int weatherUpdateIntervalMin = Integer.parseInt(prefs.getString(
                 getString(R.string.key_update), "0"));
@@ -634,7 +628,6 @@ public class ClockActivity extends Activity {
                 mLayoutToday.setVisibility(View.VISIBLE);
             }
         }
-
     }
 
     @Override
