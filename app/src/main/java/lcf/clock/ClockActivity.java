@@ -132,21 +132,6 @@ public class ClockActivity extends Activity {
         batteryProgressBar = (ProgressBar) findViewById(R.id.batteryProgressBar);
         calcSizes();
 
-//        сделаю ка я ширину горизонтального прогресс бара опцией
-
-
-        // need to get width of mDate1View, but first it must be filled with data
-        Date now = new Date();
-        DateFormat dateFormat = android.text.format.DateFormat
-                .getDateFormat(getApplicationContext());
-        String d = dateFormat.format(now);
-        mDate1View.setText(d);
-        mDate1View.measure(0,0); // замер размеров
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mDate1View.getMeasuredWidth()/3, 5);
-        params.gravity = Gravity.CENTER_HORIZONTAL;
-        batteryProgressBar.setLayoutParams(params);
-
-        textColor = getTextColorFromSettings();
         initializeProgressBar();
 
                 mWeatherReciever = new WeatherMain(getFilesDir(), new Runnable() {
@@ -214,18 +199,23 @@ public class ClockActivity extends Activity {
     }
 
     private void initializeProgressBar() {
+        PreferenceManager.setDefaultValues(this, R.xml.preference, false); // because of this call
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // read numeric EditTextPreference
+        int progressBarHeight = Integer.parseInt(prefs.getString(getString(R.string.key_progressbar_height),"5"));
+        int progressBarWidth = Integer.parseInt(prefs.getString(getString(R.string.key_progressbar_width),"100"));
+        // read Preference
+        textColor = prefs.getInt(this.getString(R.string.key_color),0xFF00FF00);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(progressBarWidth, progressBarHeight);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        batteryProgressBar.setLayoutParams(params);
+
         LayerDrawable pbLayerDrawable = (LayerDrawable) batteryProgressBar.getProgressDrawable();
         Drawable background = pbLayerDrawable.getDrawable(0);
         Drawable tint = pbLayerDrawable.getDrawable(1);
         background.setColorFilter(darkenColor(textColor, 0.3f), PorterDuff.Mode.SRC_IN);
         tint.setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
-    }
-
-    private int getTextColorFromSettings() {
-        PreferenceManager.setDefaultValues(this, R.xml.preference, false);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //return prefs.getInt("key_color", -16711936);
-        return ColorDialog.getTextColorInt(prefs, this);
     }
 
     private void calcSizes() {
@@ -559,11 +549,6 @@ public class ClockActivity extends Activity {
             findViewById(R.id.dummyView3).setVisibility(View.GONE);
         }
 
-        if (prefs.getBoolean("battery_level", true))    // if show battery indicator option enabled
-            batteryProgressBar.setVisibility(View.VISIBLE);
-        else
-            batteryProgressBar.setVisibility(View.GONE);
-
         int weatherWeek = prefsVisibility(prefs, R.string.key_weather_week);
         for (WeatherView w : mWeekForecast) {
             w.setVisibility(weatherWeek);
@@ -584,8 +569,11 @@ public class ClockActivity extends Activity {
         findViewById(R.id.rootView).setBackgroundColor(
                 ColorDialog.getBackgroundColorInt(prefs, this));
 
-        // text color has changed, need to reinitialize battery progress bar
-        textColor = ColorDialog.getTextColorInt(prefs, this);
+        if (prefs.getBoolean("battery_level", true))
+            batteryProgressBar.setVisibility(View.VISIBLE);
+        else
+            batteryProgressBar.setVisibility(View.GONE);
+
         initializeProgressBar();
 
         int weatherUpdateIntervalMin = Integer.parseInt(prefs.getString(

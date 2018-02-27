@@ -62,6 +62,7 @@
 	<string name="cat1">Weather</string>
 	<string name="cat2">Hardware</string>
 	<string name="cat3">Appearance</string>
+	<string name="cat4">Battery indicator</string>
 
 	<string name="preference_api_key">API Key</string>
     <string name="preference_city_disabled_summary">Set API key to select city</string>
@@ -109,8 +110,14 @@
 	<string name="cat3_weather_24h_summary">Display detailed forecast for next 24 hours</string>	
 	<string name="cat3_weather_week">Week forecast</string>
 	<string name="cat3_weather_week_summary">Display week forecast</string>
-	<string name="cat3_battery_level">true</string>
-	<string name="cat3_battery_level_summary">Show battery charge level</string>
+
+	<string name="cat4_battery_level">Enable</string>
+	<string name="cat4_battery_level_summary">Shows battery indicator</string>
+	<string name="cat4_bat_progressbar_height">Battery indicator height</string>
+	<string name="cat4_bat_progressbar_height_summary">Height in pixels</string>
+	<string name="cat4_bat_progressbar_width">Battery indicator width</string>
+	<string name="cat4_bat_progressbar_width_summary">Width in pixels</string>
+
 
 	<!-- Check WeatherUnits to view indexes for default units -->
 	<string name="temperature_default_units">0</string>

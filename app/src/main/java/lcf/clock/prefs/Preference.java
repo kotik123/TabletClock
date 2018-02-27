@@ -9,11 +9,13 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class Preference extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener, OnPreferenceChangeListener,
@@ -200,6 +202,9 @@ public class Preference extends PreferenceActivity implements
 		onSharedPreferenceChanged(mSharedPreferences,
 				getString(R.string.key_orientation));
 
+		// это все, что нужно, чтобы вывести значение в описание
+		onSharedPreferenceChanged(mSharedPreferences, getString(R.string.key_progressbar_width));
+		onSharedPreferenceChanged(mSharedPreferences, getString(R.string.key_progressbar_height));
 	}
 
 	@Override
@@ -229,6 +234,14 @@ public class Preference extends PreferenceActivity implements
 				listPref.setSummary(listPref.getEntry());
 			}
 		} else if (pref != null) {
+
+			if (key.equals(getString(R.string.key_progressbar_width))) {
+					pref.setSummary(appPreferences.getBatteryBarWidth());
+			}
+			if (key.equals(getString(R.string.key_progressbar_height))) {
+					pref.setSummary(appPreferences.getBatteryBarHeight());
+			}
+
 			if (pref instanceof ListPreference) {
 				ListPreference listPref = (ListPreference) pref;
 				listPref.setSummary(listPref.getEntry());

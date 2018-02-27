@@ -49,6 +49,14 @@ public class AppPreferences {
 		return getStringPreference(R.string.key_city);
 	}
 
+	String getBatteryBarWidth() {
+		return getStringPreference(R.string.key_progressbar_width);
+	}
+
+	String getBatteryBarHeight() {
+		return getStringPreference(R.string.key_progressbar_height);
+	}
+
 	void setCity(String city, int id) {
 		sharedPreferences.edit()
 				.putString(context.getString(R.string.key_city), city)

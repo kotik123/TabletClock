@@ -109,10 +109,29 @@
                 android:key="@string/key_weather_week"
                 android:summary="@string/cat3_weather_week_summary"
                 android:title="@string/cat3_weather_week" />
-         <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="@string/key_battery_level"
-                android:summary="@string/cat3_battery_level_summary"
-                android:title="@string/cat3_battery_level" />
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/cat4" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/key_battery_level"
+            android:summary="@string/cat4_battery_level_summary"
+            android:title="@string/cat4_battery_level" />
+        <EditTextPreference
+            android:key="@string/key_progressbar_height"
+            android:numeric="integer"
+            android:defaultValue="5"
+            android:maxLength="5"
+            android:title="@string/cat4_bat_progressbar_height"
+            android:summary="@string/cat4_bat_progressbar_height_summary" />
+        <EditTextPreference
+            android:key="@string/key_progressbar_width"
+            android:numeric="integer"
+            android:defaultValue="100"
+            android:maxLength="5"
+            android:title="@string/cat4_bat_progressbar_width"
+            android:summary="@string/cat4_bat_progressbar_width_summary" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

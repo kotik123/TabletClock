@@ -58,7 +58,8 @@
 	<string name="outdated">Данные устарели. Проверьте подключение к интернету и время на устройстве.</string>
 	<string name="cat1">Погода</string>
 	<string name="cat2">Устройство</string>
-	<string name="cat3">Внешний вид</string>	
+	<string name="cat3">Внешний вид</string>
+	<string name="cat4">Индикатор заряда батареи</string>
 		
 	<string name="cat1_city">Город</string>
 	<string name="cat1_update_period">Интервал обновления погоды</string>
@@ -104,6 +105,12 @@
 	<string name="cat3_weather_24h_summary">Отображать подробный прогноз на следующие 24 часа</string>	
 	<string name="cat3_weather_week">Недельный прогноз</string>
 	<string name="cat3_weather_week_summary">Отображать прогноз погоды на следующую неделю</string>
-	<string name="cat3_battery_level">Уровень заряда батареи</string>
-	<string name="cat3_battery_level_summary">Показывать уровень заряда батареи</string>
+
+	<string name="cat4_battery_level">Показывать индикатор</string>
+	<string name="cat4_battery_level_summary">Показывает уровень заряда, в виде горизонтальной полоски</string>
+	<string name="cat4_bat_progressbar_height">Толщина индикатора</string>
+	<string name="cat4_bat_progressbar_height_summary">Толщина в пикселях</string>
+	<string name="cat4_bat_progressbar_width">Длина индикатора</string>
+	<string name="cat4_bat_progressbar_width_summary">Длина в пикселях</string>
+
 </resources>

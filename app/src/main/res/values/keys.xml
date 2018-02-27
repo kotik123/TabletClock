@@ -31,5 +31,7 @@
     <string name="key_weather_24h">weather_24h</string>
     <string name="key_weather_week">weather_week</string>
     <string name="key_battery_level">battery_level</string>
+    <string name="key_progressbar_height">progressbar_height</string>
+    <string name="key_progressbar_width">progressbar_width</string>
     <string name="key_flip">flip</string>
 </resources>
