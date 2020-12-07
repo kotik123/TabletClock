@@ -18,6 +18,7 @@ import lcf.weather.Weather;
 import lcf.weather.WeatherMain;
 import lcf.weather.WeatherUnits;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -218,6 +219,7 @@ public class ClockActivity extends Activity {
         tint.setColorFilter(textColor, PorterDuff.Mode.SRC_IN);
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void calcSizes() {
         final int reserved = 10; // padding, should be exclude from calculation same time as used
         float spaceAfterTime = Style.applyTimeView(mTimeView) - reserved;
@@ -225,20 +227,31 @@ public class ClockActivity extends Activity {
                 / Style.getScreenAspectRatioViewsCoeficient();
         mTimeView.setPadding(0, reserved, 0, 0);
         float secondLineHeight = heightLeft * 0.6f; //should be more that 0.55, beacuse of calculation base on this size
-        mTemperatureView.setPadding(0, reserved, 0, reserved);
+        mTemperatureView.setPadding(5, reserved, 0, reserved); //left 5 temperature
+        mTemperatureView.setY(-110); //margin current temperature
         float twHeight = secondLineHeight - reserved * 2;
         Style.applyTextsView(mTemperatureView, twHeight);
         findViewById(R.id.layout1).setMinimumHeight((int) (twHeight / 2));
         Rect tmp = new Rect();
         mTemperatureView.getPaint().getTextBounds("-88", 0, 3, tmp);
         mTemperatureView.setMinWidth(tmp.width());
+        //
+        //
         Style.applyTextsView(mDate1View, secondLineHeight * 0.40f - reserved); // sum should be 1.0 or less with next
-        mDate1View.setPadding(0, reserved, 0, reserved);
+        mDate1View.setPadding(0, reserved, 10, reserved);
+        mDate1View.setY(-15); // margin date
+        ///
+        ///
         Style.applyTextsView(mDate2View, secondLineHeight * 0.40f - reserved);// sum should be 1.0 or less with prev
-        mDate2View.setPadding(0, -reserved, 0, reserved);
+        mDate2View.setPadding(0, -reserved, 10, reserved);
+        mDate2View.setTextSize(130F); //day of week bigger
+        mDate2View.setY(-100); // margin day of week
+        //
+        //
         float alarmSize = secondLineHeight * 0.24f - reserved;
         Style.applyTextsView(mAlarm1View, alarmSize);
         mNowWeather.setPadding(0, reserved, 0, reserved);
+        mNowWeather.setY(-160); //margin weather icons
         float thirdLineHeight = heightLeft - secondLineHeight;
         float extraSize = (heightLeft - 2 * thirdLineHeight) / 3.0f;
         mExtraData.setPadding(0, (int) extraSize, 0, (int) extraSize);
@@ -394,11 +407,13 @@ public class ClockActivity extends Activity {
 
     private void updateData() {
         Date now = new Date();
-        DateFormat dateFormat = android.text.format.DateFormat
-                .getDateFormat(getApplicationContext());
-        String d = dateFormat.format(now);
-        mDate1View.setText(d);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.getDefault());
+//       DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+//       String dow1 = dateFormat.format(now);
+        SimpleDateFormat d = new SimpleDateFormat("MM.dd", Locale.getDefault()); //short way of month + NO YEAR
+        String dow1 = d.format(now);
+        mDate1View.setText(dow1);
+        mDate1View.setTextSize(130F); //date bigger
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE", Locale.getDefault()); //short way of week day
         String dow = sdf.format(now);
         mDate2View.setText(dow);
 

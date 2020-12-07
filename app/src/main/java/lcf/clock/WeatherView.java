@@ -111,7 +111,7 @@ public class WeatherView extends LinearLayout {
 				when += getContext().getText(R.string.evening);
 			}
 		}
-		when += ":";
+		when += ""; // ':
 		mWhenView.setTextSize(mFontSize);
 		Style.adjustFontSizeForWidth(mWhenView, when, mIconViewWidth
 				+ ICON_PADDING * 2);
@@ -289,11 +289,12 @@ public class WeatherView extends LinearLayout {
 				+ WeatherUnits.getPressureUnitsString();
 		desribe += Style.LINE_SEPARATOR;
 
-		desribe += Style.CHAR_CODE_CLOUD + +Math.round(weather.getCloudValue())
-				+ " " + WeatherUnits.getCloudValueUnitsString();
-		desribe += "  " + Style.CHAR_CODE_HUMIDITY
-				+ Math.round(weather.getHumidity()) + " "
-				+ WeatherUnits.getHumidityUnitsString();
+//		desribe += Style.CHAR_CODE_CLOUD + +Math.round(weather.getCloudValue())
+//				+ " " + WeatherUnits.getCloudValueUnitsString();
+//		desribe += "  " + Style.CHAR_CODE_HUMIDITY
+//				+ Math.round(weather.getHumidity()) + " "
+//				+ WeatherUnits.getHumidityUnitsString();
+		//disable humidity and clouds
 
 		if (weather.getDatePeriodHours() > 0) {
 

@@ -30,8 +30,8 @@
 		    android:gravity="center_vertical"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"/>
-	    
-	    <LinearLayout 
+
+	    <LinearLayout
 	        android:id="@+id/layoutToday"
 	        android:orientation="vertical"
 	        android:gravity="center"
@@ -56,12 +56,12 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			         />
-		
-				<lcf.clock.WeatherView class="lcf.weather.view.WeatherView"
-				    android:layout_gravity="bottom"
-		            android:id="@+id/weatherNow"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"/>
+
+			   <lcf.clock.WeatherView class="lcf.weather.view.WeatherView"
+				   android:layout_gravity="bottom"
+				   android:id="@+id/weatherNow"
+				   android:layout_width="wrap_content"
+				   android:layout_height="wrap_content"/>
 			    
 				<LinearLayout 
 			        android:id="@+id/layout3"
@@ -205,12 +205,12 @@
 			        android:layout_weight="1"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content">
-	
+
 					<lcf.clock.WeatherView class="lcf.weather.view.WeatherView"
 			            android:id="@+id/weatherWeekSlot3"
-				        android:layout_width="wrap_content" 
+				        android:layout_width="wrap_content"
 				        android:layout_height="wrap_content"/>
-					
+
 					<lcf.clock.WeatherView class="lcf.weather.view.WeatherView"
 			            android:id="@+id/weatherWeekSlot7"
 				        android:layout_width="wrap_content" 

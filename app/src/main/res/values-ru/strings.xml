@@ -8,7 +8,7 @@
     <string name="rateus">Оценить нас</string>
     <string name="about">О программе</string>
     <string name="exit">Выход</string>
-    <string name="now">Сейчас</string>
+    <string name="now"></string> <!--сейчас -->
     <string name="today">Сегодня</string>
     <string name="night">Ночь</string>
     <string name="evening">Вечер</string>
@@ -23,7 +23,7 @@
 	<string name="percent">%</string>
 	<string name="percents">процентов</string>
 	<string name="hPa">гПа</string>
-	<string name="mmHg">мм рт.ст.</string>
+	<string name="mmHg">мм</string>
 	<string name="inHg">inHg</string>
 	<string name="MetersPS">м/с</string>
 	<string name="MilesPH">mph</string>	
