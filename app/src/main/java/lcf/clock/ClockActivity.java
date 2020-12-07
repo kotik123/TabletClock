@@ -409,7 +409,7 @@ public class ClockActivity extends Activity {
         Date now = new Date();
 //       DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
 //       String dow1 = dateFormat.format(now);
-        SimpleDateFormat d = new SimpleDateFormat("MM.dd", Locale.getDefault()); //short way of month + NO YEAR
+        SimpleDateFormat d = new SimpleDateFormat("dd.MM", Locale.getDefault()); //short way of month + NO YEAR
         String dow1 = d.format(now);
         mDate1View.setText(dow1);
         mDate1View.setTextSize(130F); //date bigger
