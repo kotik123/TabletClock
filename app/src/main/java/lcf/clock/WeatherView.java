@@ -243,34 +243,6 @@ public class WeatherView extends LinearLayout {
 	private String getDesribeString(Weather weather) {
 		String desribe = "";
 
-		if (weather.getDatePeriodHours() > 0) {
-			desribe += Style.CHAR_CODE_TEMPERATURE + " ";
-			if (Math.round(weather.getTemperatureMin()) == Math.round(weather
-					.getTemperatureMax())
-					|| (weather.getDatePeriodHours() != 0 && weather
-							.getDatePeriodHours() < 12)) {
-				desribe += weather.getTemperatureString()
-						+ Style.CHAR_CODE_DEGREE
-						+ WeatherUnits.getTemperatureUnitsString();
-			} else {
-				desribe += weather.getTemperatureMinString() + ".."
-						+ weather.getTemperatureMaxString()
-						+ Style.CHAR_CODE_DEGREE
-						+ WeatherUnits.getTemperatureUnitsString();
-			}
-		} else {
-			if (weather.getWeatherDescription() == null) {
-				desribe += Style.LINE_SEPARATOR;
-			} else {
-				String res = Style.splitTextForWidth(
-						mDescriptionView.getPaint(),
-						weather.getWeatherDescription(), mIconViewWidth, 2);
-				desribe += res;
-				if (res.indexOf(Style.LINE_SEPARATOR) < 0) {
-					desribe += Style.LINE_SEPARATOR;
-				}
-			}
-		}
 		// desribe += Style.LINE_SEPARATOR; //temp disable line
 
 //		desribe += Style.CHAR_CODE_WIND + " " + Math.round(weather.getWindSpeed()) + " " + WeatherUnits.getSpeedUnitsString() + " "	+ describeWindDirection(weather.getWindDirection()); //temp disable wind speed
@@ -286,6 +258,32 @@ public class WeatherView extends LinearLayout {
 //		desribe += Style.CHAR_CODE_BAROMETER + " " + tmp + " " + WeatherUnits.getPressureUnitsString(); //temp disable MM rt st
 		desribe += Style.CHAR_CODE_BAROMETER + " " + tmp;
 		desribe += Style.LINE_SEPARATOR;
+
+		if (weather.getDatePeriodHours() > 0) {
+			desribe += Style.CHAR_CODE_TEMPERATURE + " ";
+			if (Math.round(weather.getTemperatureMin()) == Math.round(weather
+					.getTemperatureMax())
+					|| (weather.getDatePeriodHours() != 0 && weather
+					.getDatePeriodHours() < 12)) {
+				desribe += weather.getTemperatureString()
+						+ Style.CHAR_CODE_DEGREE
+						+ WeatherUnits.getTemperatureUnitsString();
+			} else {
+				desribe += weather.getTemperatureMinString() + ".."
+						+ weather.getTemperatureMaxString()
+						+ Style.CHAR_CODE_DEGREE
+						+ WeatherUnits.getTemperatureUnitsString();
+			}
+		} else {
+			if (weather.getWeatherDescription() == null) {
+				desribe += Style.LINE_SEPARATOR;
+			} else {
+				String res = Style.splitTextForWidth(
+				mDescriptionView.getPaint(), weather.getWeatherDescription() , mIconViewWidth, 2);
+				if (res.contains("\n")) {desribe = Style.LINE_SEPARATOR + desribe;}
+				else{desribe += res;} //long description no + separate line before
+			}
+		}
 
 //		desribe += Style.CHAR_CODE_CLOUD + +Math.round(weather.getCloudValue())
 //				+ " " + WeatherUnits.getCloudValueUnitsString();
@@ -392,7 +390,9 @@ public class WeatherView extends LinearLayout {
 		int sz5 = (int) (mSize / (getNumberOfLines() * mLineSpaccingMulti));
 		mFontSize = Style.PxToSp(sz5);
 		mWhenView.setTextSize(mFontSize);
-		mDescriptionView.setTextSize(mFontSize);
+		//mDescriptionView.setTextSize(mFontSize); //temp resize describe text
+		mDescriptionView.setTextSize(50);
+		mDescriptionView.setLineSpacing(65,0);
 		float szIC = (mSize - sz5 - ICON_PADDING * 2);
 		mIconViewWidth = (int) (szIC / ICON_ASPECT_RATIO);
 		mIconViewHeight = (int) szIC;

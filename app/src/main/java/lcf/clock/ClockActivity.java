@@ -252,6 +252,7 @@ public class ClockActivity extends Activity {
         Style.applyTextsView(mAlarm1View, alarmSize);
         mNowWeather.setPadding(0, reserved, 0, reserved);
         mNowWeather.setY(-160); //margin weather icons
+        mNowWeather.setSize(200);
         float thirdLineHeight = heightLeft - secondLineHeight;
         float extraSize = (heightLeft - 2 * thirdLineHeight) / 3.0f;
         mExtraData.setPadding(0, (int) extraSize, 0, (int) extraSize);
@@ -270,7 +271,6 @@ public class ClockActivity extends Activity {
         }
         findViewById(R.id.dummyView3).setMinimumHeight(
                 (int) (twHeight + wH / 2));
-
         int leftForDate = Style.getDisplayMetrics().widthPixels - tmp.width()
                 - mNowWeather.getMaximumWidth();
         String maxDate = "88/88/8888";
@@ -788,6 +788,7 @@ public class ClockActivity extends Activity {
         mAlarm1View.setTextColor(color);
         mAlarm2View.setTextColor(color);
         mExtraData.setTextColor(color);
+        //change text size of extra weather data
         mNowWeather.setTextColor(color);
         for (WeatherView wv : mForecast) {
             wv.setTextColor(color);

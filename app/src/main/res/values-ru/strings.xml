@@ -25,7 +25,7 @@
 	<string name="hPa">гПа</string>
 	<string name="mmHg">мм</string>
 	<string name="inHg">inHg</string>
-	<string name="MetersPS">м/с</string>
+	<string name="MetersPS">м</string>
 	<string name="MilesPH">mph</string>	
 	<string name="mm">мм</string>	
 	<string name="Unknown">неизвестно</string>
