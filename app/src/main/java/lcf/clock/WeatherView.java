@@ -271,12 +271,10 @@ public class WeatherView extends LinearLayout {
 				}
 			}
 		}
-		desribe += Style.LINE_SEPARATOR;
+		// desribe += Style.LINE_SEPARATOR; //temp disable line
 
-		desribe += Style.CHAR_CODE_WIND + " "
-				+ Math.round(weather.getWindSpeed()) + " "
-				+ WeatherUnits.getSpeedUnitsString() + " "
-				+ describeWindDirection(weather.getWindDirection());
+//		desribe += Style.CHAR_CODE_WIND + " " + Math.round(weather.getWindSpeed()) + " " + WeatherUnits.getSpeedUnitsString() + " "	+ describeWindDirection(weather.getWindDirection()); //temp disable wind speed
+		desribe += Style.CHAR_CODE_WIND + " " + Math.round(weather.getWindSpeed()) + " " + WeatherUnits.getSpeedUnitsString();
 		desribe += Style.LINE_SEPARATOR;
 
 		String tmp;
@@ -285,8 +283,8 @@ public class WeatherView extends LinearLayout {
 		} else {
 			tmp = String.valueOf(Math.round(weather.getPressure()));
 		}
-		desribe += Style.CHAR_CODE_BAROMETER + " " + tmp + " "
-				+ WeatherUnits.getPressureUnitsString();
+//		desribe += Style.CHAR_CODE_BAROMETER + " " + tmp + " " + WeatherUnits.getPressureUnitsString(); //temp disable MM rt st
+		desribe += Style.CHAR_CODE_BAROMETER + " " + tmp;
 		desribe += Style.LINE_SEPARATOR;
 
 //		desribe += Style.CHAR_CODE_CLOUD + +Math.round(weather.getCloudValue())

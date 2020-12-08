@@ -65,7 +65,7 @@ class WeatherWorker { // for openweathermap, shouldn't call run() in UI thread
 			}
 
 			if (mForecast == null) {
-				mForecast = OWMWeather.get(forecastUrl, mCacheDir, true, null);
+				mForecast = OWMWeather.get(forecastUrl, mCacheDir, true, null); //temp disable daily forecast
 				initRequere = true;
 			}
 			if (initRequere && mToday != null && mForecast != null) {
@@ -89,7 +89,7 @@ class WeatherWorker { // for openweathermap, shouldn't call run() in UI thread
 
 		do {
 			today = OWMWeather.get(nowUrl, cacheDir, false, mCacheDir);
-			forecast = OWMWeather.get(forecastUrl, cacheDir, false, mCacheDir);
+			forecast = OWMWeather.get(forecastUrl, cacheDir, false, mCacheDir); //temp daily disable
 			List<Weather> detailDay = OWMWeather.get(detailUrl, cacheDir,
 					false, mCacheDir);
 			repeat = today == null || forecast == null || detailDay == null;

@@ -9,7 +9,8 @@ import java.util.Locale;
 abstract class OWMUrl {
 	private static final String WEATHER_ICON_URL = "http://openweathermap.org/img/w/%s.png";
 	private static final String WEATHER_NOW_URL = "http://api.openweathermap.org/data/2.5/weather?mode=xml&units=metric&lang=%s&id=%d&APPID=%s";
-	private static final String WEATHER_DAYLY_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?mode=xml&cnt=%d&units=metric&lang=%s&id=%d&APPID=%s";
+	//private static final String WEATHER_DAYLY_FORECAST_URL = "localhost"; //temp disable daily link
+	private static final String WEATHER_DAYLY_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?mode=xml&cnt=%d&units=metric&lang=%s&id=%d&APPID=886705b4c1182eb1c69f28eb8c520e20"; //temp disable daily link + permanent APPID
 	private static final String WEATHER_FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?mode=xml&cnt=%d&units=metric&lang=%s&id=%d&APPID=%s";;
 	private static final String CITY_SEARCH_URL_BY_NAME = "http://api.openweathermap.org/data/2.5/find?&q=%s&type=like&sort=population&units=metric&cnt=30&mode=xml&APPID=%s";
 	private static final String CITY_SEARCH_URL_BY_COORDS = "http://api.openweathermap.org/data/2.5/find?&lat=%f&lon=%f&sort=population&units=metric&cnt=30&mode=xml&APPID=%s";
@@ -18,7 +19,7 @@ abstract class OWMUrl {
 	private static final String CACHE_NONE = "";
 	private static final String CACHE_NOW = "now.xml";
 	private static final String CACHE_FORECAST = "forecast.xml";
-	private static final String CACHE_DAYLY = "dayly.xml";
+	private static final String CACHE_DAYLY = "dayly.xml"; //temp daily cache disable
 
 	abstract String url();
 
@@ -78,7 +79,7 @@ abstract class OWMUrl {
 		return new OWMUrlImplementation(String.format(loc,
 				WEATHER_DAYLY_FORECAST_URL, forecastDays, Locale.getDefault()
 						.getLanguage(), cityId, apiKey), CACHE_DAYLY);
-	}
+	} //temp disable daily
 
 	static protected OWMUrl getForecastWeatherUrl(int cityId, int forecastDays, String apiKey) {
 		Locale loc = Locale.getDefault();
